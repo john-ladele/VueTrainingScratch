@@ -7,19 +7,20 @@
     <title>Vue Basics</title>
     <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
-    <script src="../resources/vue-global-prod.js" defer></script>
+    <script src="https://unpkg.com/vue@next" defer></script>
     <script src="app.js" defer></script>
 </head>
 
 <body>
     <header>
-        <h1>Vue Course Goals</h1>
+        <h1>Vue Dynamic Styling</h1>
     </header>
-    <section id="user-goal">
-        <h2>My Course Goal</h2>
-        <p>{{ outputGoal() }}</p>
-        <p>Learn more <a v-bind:href="vueLink">About Vue</a></p>
+    <section id="styling">
+        <div class="demo" :class="boxAclasses" @click="boxSelected('A')"></div>
+        <div class="demo" :class="boxBclasses" @click="boxSelected('B') "></div>
+        <div class="demo" :class="{active : boxCselected}" @click="boxSelected('C') "></div>
     </section>
 </body>
+
 
 </html>
