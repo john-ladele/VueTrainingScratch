@@ -8,21 +8,48 @@ Vue.createApp({
             playerHealth: 100,
             monsterHealth: 100,
             currentRound: 0,
+            winner: null,
         };
     },
     computed: {
         monsterBarStyles() {
+            if (this.monsterHealth < 0) { //sets bar to empty rather than a negative value
+                return { width: '0%' };
+            }
             return {
                 width: this.monsterHealth + '%'
             };
         },
         playerBarStyles() {
+            if (this.playerHealth < 0) { //sets bar to empty rather than a negative value
+                return { width: '0%' };
+            }
             return {
                 width: this.playerHealth + '%'
             };
         },
         mayUseSpecialAttack() {
             return this.currentRound % 3 !== 0
+        }
+    },
+    watch: {
+        playerHealth(value) {
+            if (value <= 0 && this.monsterHealth <= 0) {
+                // A draw
+                this.winner = 'draw';
+            } else if (value <= 0) {
+                // Player Lost
+                this.winner = 'monster';
+            }
+        },
+        monsterHealth(value) {
+            if (value <= 0 && this.playerHealth <= 0) {
+                // A draw
+                this.winner = 'draw';
+            } else if (value <= 0) {
+                //Monster Lost
+                this.winner = 'player';
+            }
         }
     },
     methods: {
@@ -43,13 +70,22 @@ Vue.createApp({
             this.monsterHealth = this.monsterHealth - attackValue;
             this.attackPlayer();
         },
-        playerHealth() {
-            const healthAddUp = getRandomValue(2, 7);
-            this.playerHealth += healthAddUp;
+        healPlayer() {
+            const healthAddUp = getRandomValue(8, 20);
+            if (this.playerHealth + healthAddUp > 100) {
+                this.playerHealth = 100;
+            } else {
+                this.playerHealth += healthAddUp;
+            }
         },
         surrender() {
-            this.playerHealth = 0;
-            alert('Game over! You Lose...')
+            this.winner = 'monster';
+        },
+        startGame() {
+            this.playerHealth = 100;
+            this.monsterHealth = 100;
+            this.currentRound = 0;
+            this.winner = null;
         }
     }
 }).mount('#game');

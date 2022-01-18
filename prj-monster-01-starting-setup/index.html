@@ -28,11 +28,19 @@
                 <div class="healthbar__value" :style="playerBarStyles"></div>
             </div>
         </section>
-        <section id="controls">
+        <section class="container" v-if="winner">
+            <!--The v-if hides the content since winner is set to null initially-->
+            <h2>Game Over!</h2>
+            <h3 v-if="winner === 'monster'">You Lost!</h3>
+            <h3 v-else-if="winner === 'player'">You Won!</h3>
+            <h3 v-else>It's a Draw!</h3>
+            <button @click="startGame">Start New Game!</button>
+        </section>
+        <section id="controls" v-else>
             <button @click="attackMonster">ATTACK</button>
             <button :disabled="mayUseSpecialAttack" @click="specialAttackMonster">SPECIAL ATTACK</button>
             <!--Disable button is current round is not divisible by 3-->
-            <button @click="playerHealth">HEAL</button>
+            <button @click="healPlayer">HEAL</button>
             <button @click="surrender">SURRENDER</button>
         </section>
         <section id="log" class="container">
