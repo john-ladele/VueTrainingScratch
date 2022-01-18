@@ -9,6 +9,7 @@ Vue.createApp({
             monsterHealth: 100,
             currentRound: 0,
             winner: null,
+            logMessages: [],
         };
     },
     computed: {
@@ -58,16 +59,19 @@ Vue.createApp({
             this.currentRound++;
             const attackValue = getRandomValue(5, 12); //this calculates random numbers between 5(min) and 12(max)
             this.monsterHealth = this.monsterHealth - attackValue;
+            this.addLogMessage('player', 'attack', attackValue);
             this.attackPlayer(); //since it's an auto attack on player when monster is attacked, we then call the attackPlayer method here so it is applied everytime the monster is attacked!
         },
         attackPlayer() {
             const attackValue = getRandomValue(8, 15); //this calculates random numbers between 8(min) and 15(max) bcos the monster hits harder
             this.playerHealth -= attackValue;
+            this.addLogMessage('monster', 'attack', attackValue);
         },
         specialAttackMonster() {
             this.currentRound++;
             const attackValue = getRandomValue(10, 25); //special damage
             this.monsterHealth = this.monsterHealth - attackValue;
+            this.addLogMessage('player', 'special-attack', attackValue);
             this.attackPlayer();
         },
         healPlayer() {
@@ -77,15 +81,25 @@ Vue.createApp({
             } else {
                 this.playerHealth += healthAddUp;
             }
+            this.addLogMessage('player', 'heal', healthAddUp);
+            this.attackPlayer();
         },
         surrender() {
             this.winner = 'monster';
+        },
+        addLogMessage(who, what, value) {
+            this.logMessages.unshift({ //UNSHIFT adds something to the top of an array while PUSH adds to the bottom
+                actionBy: who,
+                actionType: what,
+                actionValue: value
+            });
         },
         startGame() {
             this.playerHealth = 100;
             this.monsterHealth = 100;
             this.currentRound = 0;
             this.winner = null;
+            this.logMessages = [];
         }
     }
 }).mount('#game');
