@@ -9,10 +9,11 @@ const app = Vue.createApp({
         addGoal() {
             this.goals.push(this.enteredGoalValue);
             this.enteredGoalValue = "";
-            if (goals.length === 0) {
-
-            };
         },
+        //to delete an array from list, use SPLICE
+        removeGoal(idx) { //idx -- same as index
+            this.goals.splice(idx, 1);
+        }
 
     }
 });
