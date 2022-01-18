@@ -1,9 +1,9 @@
 Vue.createApp({
     data() {
         return {
-            courseGoalA: "Finish the course and learn!",
-            courseGoalB: "Master Vue and build amazing apps",
-            vueLink: "https://www.thecoder.net"
+            vueLink: 'https://vuejs.org',
+            courseGoalA: 'Finish the course and learn Vue!',
+            courseGoalB: 'Master Vue and build amazing apps!'
         };
     },
     methods: {
@@ -16,4 +16,4 @@ Vue.createApp({
             }
         }
     }
-}).mount("#user-goal");
+}).mount('#user-goal');
