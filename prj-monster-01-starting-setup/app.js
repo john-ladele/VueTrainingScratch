@@ -9,6 +9,18 @@ Vue.createApp({
             monsterHealth: 100,
         };
     },
+    computed: {
+        monsterBarStyles() {
+            return {
+                width: this.monsterHealth + '%'
+            };
+        },
+        playerBarStyles() {
+            return {
+                width: this.playerHealth + '%'
+            };
+        },
+    },
     methods: {
         //actions we support in our vue application
         attackMonster() { //math.floor rounds up the result to prevent decimals
@@ -19,6 +31,14 @@ Vue.createApp({
         attackPlayer() {
             const attackValue = getRandomValue(8, 15); //this calculates random numbers between 8(min) and 15(max) bcos the monster hits harder
             this.playerHealth -= attackValue;
+        },
+        playerHealth() {
+            const healthAddUp = getRandomValue(2, 7);
+            this.playerHealth += healthAddUp;
+        },
+        surrender() {
+            this.playerHealth = 0;
+            alert('Game over! You Lose...')
         }
     }
 }).mount('#game');
