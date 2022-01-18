@@ -20,8 +20,14 @@
         <input type="text" v-model="enteredGoalValue" />
         <button @click="addGoal">Add Goal</button>
         <ul>
-            <li v-for="goal in goals">{{goal}}</li>
+            <!-- We can also add the index of the item in the array  -->
+            <li v-for="(goal, index) in goals">{{goal}} - {{index}}</li>
         </ul>
+
+        <!-- v-for can be used with object as well and to also single out elements in the object -->
+        <!-- <ul>
+            <li v-for="(value, key, index) in {Name: 'John', Age:'32'}">{{key}}: {{value}} - {{index}}</li>
+        </ul> -->
     </section>
 </body>
 
